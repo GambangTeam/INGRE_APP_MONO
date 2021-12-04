@@ -7,4 +7,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'final-project';
+
+
+  isLoggedIn(): boolean {
+    return (sessionStorage.getItem('token') !== null)
+  }
+
+  sidebar = false
+
+
+  toggleSidebar() {
+    console.log(this.sidebar)
+    this.sidebar = !this.sidebar
+  }
 }

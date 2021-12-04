@@ -1,0 +1,174 @@
+<div class="text-gray-100 flex justify-between md:hidden">
+  <!-- logo -->
+  <a routerLink="home" class="block p-4 text-white font-bold">Ingre App</a>
+
+  <!-- mobile menu button -->
+  <button
+    (click)="toggleSidebar()"
+    class="mobile-menu-button p-4 focus:outline-none"
+    [ngClass]="sidebar ? 'z-40' : 'z-0'"
+  >
+    <ng-container *ngIf="sidebar; else close">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </ng-container>
+    <ng-template #close>
+      <svg
+        class="h-5 w-5"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
+    </ng-template>
+  </button>
+</div>
+
+<!-- sidebar -->
+<div
+  [ngClass]="
+    sidebar
+      ? '
+      -translate-x-0 right-0
+      z-10
+      '
+      : 'translate-x-full lg:left-0 right-0'
+  "
+  class="
+    sidebar
+    bg-primary
+    text-blue-100
+    w-64
+    space-y-6
+    py-7
+    px-2
+    absolute
+    inset-y-0
+    transform
+    md:relative md:translate-x-0
+    transition
+    duration-200
+    ease-in
+    z-30
+  "
+>
+  <!-- logo -->
+  <a routerLink="home" class="text-white flex items-center space-x-2 px-4">
+    <svg
+      class="w-8 h-8"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+      />
+    </svg>
+    <span class="text-2xl font-extrabold">Ingre App</span>
+  </a>
+
+  <!-- nav -->
+  <nav>
+    <a
+      routerLink="home/recipe"
+      class="
+        block
+        py-2.5
+        px-4
+        rounded
+        transition
+        duration-200
+        hover:bg-primary hover:text-white
+        font-semibold
+        cursor-pointer
+      "
+    >
+      Recipe
+    </a>
+    <a
+      routerLink="home/ingre"
+      class="
+        block
+        py-2.5
+        px-4
+        rounded
+        transition
+        duration-200
+        hover:bg-primary hover:text-white
+        font-semibold
+        cursor-pointer
+      "
+    >
+      Ingredients
+    </a>
+    <a
+      routerLink="home/user"
+      class="
+        block
+        py-2.5
+        px-4
+        rounded
+        transition
+        duration-200
+        hover:bg-primary hover:text-white
+        font-semibold
+        cursor-pointer
+      "
+    >
+      User
+    </a>
+    <a
+      routerLink=""
+      class="
+        flex
+        items-center
+        py-2.5
+        px-4
+        rounded
+        transition
+        duration-200
+        cursor-pointer
+        hover:bg-primary hover:text-white
+      "
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 -rotate-180"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+        />
+      </svg>
+      <span class="px-2 font-semibold">Logout</span>
+    </a>
+  </nav>
+</div>
