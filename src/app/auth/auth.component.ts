@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { map } from 'rxjs/operators';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginToken } from './models/auth';
+import { isNgContainer } from '@angular/compiler';
 
 
 @Component({
@@ -12,41 +13,50 @@ import { LoginToken } from './models/auth';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit {
+  isLoading: Boolean = false;
+  httpError: Boolean = false;
 
   constructor(
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly service: AuthService
   ) { }
-
   ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
         map((params: any) => params.action)
-      ).subscribe((action) => {
-        if (action === 'logout') {
-          sessionStorage.removeItem('token');
-          this.router.navigateByUrl('');
-        }
-      })
+      ).subscribe(
+        (action) => {
+          if (action == 'logout') {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('username');
+            this.router.navigateByUrl('');
+          }
+        })
   }
 
   loginForm: FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
-  })
+    username: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(4)])
+  }
+  )
 
-  onFormSubmit() {
-    // this.router.navigateByUrl('/home')
-    console.log("login Value", this.loginForm.value);
+  onFormSubmit(): void {
+    this.isLoading = true
+    sessionStorage.setItem('username', this.loginForm.get('username')?.value);
     if (this.loginForm.valid) {
       this.service.login(this.loginForm.value)
-        .subscribe((response: LoginToken) => {
-          sessionStorage.setItem('token', response.token)
-          sessionStorage.setItem('username', this.loginForm.get('username')?.value)
-          console.log(response.token);
-          this.router.navigateByUrl('home')
-        }, console.error)
+        .subscribe(
+          (respon) => {
+            sessionStorage.setItem('token', respon.token);
+            this.isLoading = false
+            this.router.navigateByUrl('');
+          },
+          (error) => {
+            console.log(error)
+            this.httpError = true
+            this.isLoading = false
+          });
     }
   }
 
@@ -55,11 +65,12 @@ export class AuthComponent implements OnInit {
     ) as AbstractControl;
 
     if (control && control.touched && control.invalid) {
-      return 'border-red-700';
+      return 'is-invalid';
     } else if (control && control.valid) {
-      return 'border-green-800'
+      return 'is-valid'
     } else {
       return '';
     }
   }
+
 }

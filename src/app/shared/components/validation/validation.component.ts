@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Component({
-  selector: 'app-validation',
+  selector: 'app-validation, [validation]',
   templateUrl: './validation.component.html',
   styleUrls: ['./validation.component.scss']
 })
@@ -19,8 +19,8 @@ export class ValidationComponent implements OnInit {
 
   messages: any = {
     "required": 'Field harus diisi',
-    "minlength": 'Field %s minimal haarus lebih panjang dari %s.',
-    "maxlength": 'Field %s minimal haarus lebih pendek dari %s.'
+    "minlength": 'Field %s minimal harus lebih panjang dari %s.',
+    "maxlength": 'Field %s minimal harus lebih pendek dari %s.'
   }
 
   isFieldValid(): boolean {

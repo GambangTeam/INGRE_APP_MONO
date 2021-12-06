@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="w-full md:w-3/5 lg:w-2/5 mx-auto lg:py-10 md:py-5 py-0">
+  <div class="w-full md:w-3/5 lg:w-2/5 mx-auto lg:py-10 md:py-5 py-0 relative">
     <div class="rounded-xl overflow-hidden pb-11 bg-white shadow-lg relative">
       <h1
         class="
@@ -64,7 +64,14 @@
             "
             >Username</label
           >
+          <div
+            class="text-red-500 text-sm mt-2 font-light"
+            validation
+            [control]="loginForm.controls['username']"
+            [fieldLabel]="'username'"
+          ></div>
         </div>
+
         <div class="mt-14 relative">
           <input
             id="password"
@@ -99,7 +106,12 @@
             "
             >Password</label
           >
-          <div class=""></div>
+          <div
+            class="text-red-500 text-sm mt-2 font-light"
+            validation
+            [control]="loginForm.controls['password']"
+            [fieldLabel]="'password'"
+          ></div>
         </div>
 
         <button
@@ -119,7 +131,7 @@
             focus:outline-none
             focus:ring
             focus:ring-offset-2
-            focus:ring-green-700
+            focus:ring-gray-200
             focus:ring-opacity-80
             cursor-pointer
             font-nunito
@@ -128,6 +140,30 @@
           Login
         </button>
       </form>
+      <div *ngIf="httpError">
+        <p class="text-red-600 text-xs font-extralight py-3 text-center">
+          Periksa Kembali Email dan Password yang digunakan
+        </p>
+      </div>
     </div>
+  </div>
+  <div
+    class="
+      absolute
+      inset-0
+      bg-black
+      opacity-40
+      flex flex-col
+      justify-center
+      text-center
+      py-4
+      text-white
+      w-full
+      h-full
+    "
+    *ngIf="isLoading"
+  >
+    <h2 class="text-sm font-semibold py-5">Loading....</h2>
+    <app-loading></app-loading>
   </div>
 </div>

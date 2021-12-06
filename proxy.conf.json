@@ -1,6 +1,6 @@
 {
   "/api" : {
-    "target": "https://dev.enigmacamp.com/trainings/api",
+    "target": "https://ingre-api-mono.herokuapp.com/api",
     "logLevel": "debug",
     "changeOrigin": true,
     "pathRewrite" : {
