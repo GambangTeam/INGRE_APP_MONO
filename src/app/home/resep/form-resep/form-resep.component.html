@@ -86,6 +86,40 @@
           >
           <input type="file" class="text-sm" />
         </div>
+        <table
+          *ngIf="tableIngredient"
+          class="rounded-md overflow-hidden shadow-md"
+        >
+          <thead>
+            <tr class="bg-primary text-white">
+              <th class="text-left px-3 py-1 font-nunito lg:text-sm text-xs">
+                Name
+              </th>
+              <th class="text-left px-3 py-1 font-nunito lg:text-sm text-xs">
+                Qty
+              </th>
+              <th class="text-left px-3 py-1 font-nunito lg:text-sm text-xs">
+                Satuan
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of ingredientsRecipe?.ingredients"
+              class="border-b border-gray-400"
+            >
+              <td class="px-3 py-1 font-nunito text-xs md:text-sm">
+                {{ item.ingredient.name }}
+              </td>
+              <td class="px-3 py-1 font-nunito text-xs md:text-sm">
+                {{ item.qty }}
+              </td>
+              <td class="px-3 py-1 font-nunito text-xs md:text-sm">
+                {{ item.ingredient.unit }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div class="my-4">
           <button
             type="button"
@@ -153,7 +187,19 @@
             </ng-container>
           </div>
         </div>
-        <button type="submit" class="px-3 py-2 bg-primary text-white">
+        <button
+          type="submit"
+          class="
+            px-3
+            py-2
+            bg-primary
+            text-white
+            font-nunito
+            rounded-md
+            text-sm
+            lg:text-base
+          "
+        >
           Simpan
         </button>
       </form>

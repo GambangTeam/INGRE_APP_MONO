@@ -21,6 +21,9 @@ export class RecipeService {
   public getAllRecipe(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>('/api/product/recipe');
   }
+  public getById(id: string): Observable<Recipe> {
+    return this.http.get<Recipe>(`/api/product/recipe/${id}`);
+  }
   public save(recipe: Recipe): Observable<any> {
     if (recipe.id) {
       return this.http.put<any>('/api/admin/product/recipe', recipe);
