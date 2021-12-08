@@ -5,6 +5,7 @@ import { ResepRoutingModule } from './resep-routing.module';
 import { ResepComponent } from './resep.component';
 import { FormResepComponent } from './form-resep/form-resep.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ResepRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class ResepModule { }

@@ -52,6 +52,7 @@
           <label class="block text-left">
             <span class="text-gray-700">Category</span>
           </label>
+
           <select
             formControlName="category"
             class="
@@ -71,7 +72,7 @@
             <option value="" selected disabled>Pilih Category</option>
             <option
               aria-placeholder="Pilih satu"
-              *ngFor="let category of categorys"
+              *ngFor="let category of categorys | searchFilter: searchText"
               value="{{ category.category }}"
               class="text-sm"
             >

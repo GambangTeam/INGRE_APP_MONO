@@ -2,7 +2,7 @@
   <div class="lg:px-4 px-1 lg:py-4 py-1 border-b-2 shadow-md border-orange-600">
     <h1 class="font-nunito font-semibold text-2xl">Dashboard Recipe Admin</h1>
   </div>
-  <div class="px-3 py-8 flex flex-col overflow-x-scroll">
+  <div class="px-3 py-8 flex flex-col">
     <div class="flex items-center justify-between">
       <button
         routerLink="form-recipe"
@@ -38,26 +38,53 @@
           </svg>
         </span>
       </button>
-      <div class="flex border-2 rounded lg:mx-0 mx-1">
+      <div class="relative items-center border-2 rounded lg:mx-0 mx-1 bg-white">
         <input
           type="text"
           class="lg:px-4 px-2 py-2 lg:w-80 w-40 lg:text-base text-xs"
           placeholder="Search..."
+          [(ngModel)]="searchText"
         />
-        <button class="flex items-center justify-center px-4 border-l">
-          <svg
-            class="w-6 h-6 text-gray-600"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
-            />
-          </svg>
-        </button>
+        <svg
+          class="w-6 h-6 text-gray-600 absolute right-2 top-2 bg-white"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
+          />
+        </svg>
       </div>
     </div>
-    <div class="my-5 mx-2 lg:text-base text-xs">okeeey</div>
+    <div class="my-5 mx-2 lg:text-base text-xs flex flex-wrap">
+      <div
+        *ngFor="let recipe of recipes | searchFilter: searchText"
+        class="
+          px-2
+          py-2
+          shadow-lg
+          flex flex-col
+          rounded-md
+          mx-2
+          my-2
+          font-nunito
+        "
+      >
+        <div class="lg:w-[250px] md:w-[200px] w-screen flex flex-col px-2 py-2">
+          <p class="text-xs text-primary">{{ recipe.category }}</p>
+          <p class="text-base font-semibold">{{ recipe.name }}</p>
+          <p class="text-sm">{{ recipe.detail }}</p>
+          <ul class="text-sm list-none">
+            <li *ngFor="let item of recipe.ingredients">
+              <div class="flex">
+                {{ item.ingredient.name }}
+                {{ item.qty }}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

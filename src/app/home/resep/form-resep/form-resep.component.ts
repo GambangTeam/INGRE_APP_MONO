@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 export class FormResepComponent implements OnInit {
   categorys: Category[] = [];
   fieldIngre: Ingredients[] = [];
+  searchText!: string;
   constructor(
     private readonly activatedRoutes: ActivatedRoute,
     private readonly recipeService: RecipeService,

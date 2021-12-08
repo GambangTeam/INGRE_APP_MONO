@@ -70,7 +70,7 @@ export class FormIngreComponent implements OnInit {
         }
         else {
           alert(`${this.ingreForm.get('name')?.value} {berhasil disimpan`);
-          this.route.navigateByUrl('ingre')
+          this.ingreForm.reset();
         }
       },
       error: () => {

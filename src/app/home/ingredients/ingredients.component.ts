@@ -11,6 +11,7 @@ import { IngredientsService } from '../services/ingredients.service';
 export class IngredientsComponent implements OnInit {
   ingres: Ingredients[] = []
   isLoading: boolean = true
+  searchText!: string;
   constructor(private readonly ingreService: IngredientsService) { }
 
   ngOnInit(): void {
