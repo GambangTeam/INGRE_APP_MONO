@@ -27,7 +27,7 @@ export class FormIngreComponent implements OnInit {
 
   ingreForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    stock: new FormControl('', [Validators.required]),
+    stock: new FormControl(100, [Validators.required]),
     price: new FormControl('', [Validators.required, Validators.minLength(3)]),
     unit: new FormControl('', [Validators.required, Validators.minLength(1)])
   })

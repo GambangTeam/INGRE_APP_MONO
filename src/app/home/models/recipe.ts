@@ -4,7 +4,7 @@ import { LotsIngredients } from './lotsIngredients';
 export interface Recipe {
   id?: number;
   name: string;
-  detail: string;
+  recipeDetail: string;
   category: Category;
-  ingredients: LotsIngredients[];
+  ingredients?: LotsIngredients[];
 }

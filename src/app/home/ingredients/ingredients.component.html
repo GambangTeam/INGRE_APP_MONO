@@ -61,8 +61,8 @@
     </div>
     <div class="my-5 mx-2 lg:text-base text-xs w-full">
       <div class="overflow-x-scroll">
-        <table class="table-auto">
-          <thead>
+        <table class="table-auto rounded-md overflow-hidden">
+          <thead class="px-2 py-1 bg-primary text-white">
             <tr>
               <th class="text-left px-3 py-1">Name</th>
               <th class="text-left px-3 py-1">Stock</th>
@@ -73,7 +73,7 @@
             </tr>
           </thead>
           <ng-container *ngIf="!isLoading; else table">
-            <tbody>
+            <tbody class="truncate">
               <tr *ngFor="let item of ingres | searchFilter: searchText">
                 <td class="text-left px-3 py-1">{{ item.name }}</td>
                 <td class="text-left px-3 py-1">{{ item.stock }}</td>

@@ -22,11 +22,22 @@ export class FormResepComponent implements OnInit {
   id: string | null = null;
   tableIngredient: boolean = false;
   ingredientsRecipe?: Recipe;
+  igredientsData!: LotsIngredients;
+  photo?: File;
+
+  recipeForm: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    recipeDetail: new FormControl('', [Validators.required]),
+    category: new FormControl('', Validators.required),
+    ingredients: new FormArray([]),
+    photo: new FormControl()
+  })
 
   constructor(
     private readonly activatedRoutes: ActivatedRoute,
     private readonly recipeService: RecipeService,
-    private readonly router: Router
+    private readonly router: Router,
+    private fromBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -47,12 +58,7 @@ export class FormResepComponent implements OnInit {
     }, console.error, () => { })
   }
 
-  recipeForm: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    recipeDetail: new FormControl('', [Validators.required]),
-    category: new FormControl('', Validators.required),
-    ingredients: new FormArray([])
-  })
+
 
   getIngredients(): any[] {
     const ingre: FormArray = this.recipeForm.get('ingredients') as FormArray;
@@ -79,7 +85,7 @@ export class FormResepComponent implements OnInit {
       next: (any) => {
         if (this.recipeForm.get('id')?.value) {
           alert(`${this.recipeForm.get('name')?.value} berhasil diupdate`);
-          this.router.navigateByUrl('ingre')
+          this.router.navigateByUrl('recipe')
           console.log(any)
           this.successConfirmation()
           this.recipeForm.reset();
@@ -101,6 +107,15 @@ export class FormResepComponent implements OnInit {
 
   }
 
+  handleFileUpload(event: any): void {
+    const files: FileList = event.target.files;
+    console.log(event.target.files);
+    if (files) {
+      this.photo = files.item(0) as File;
+      this.recipeForm.get('photo')?.setValue(this.photo);
+    }
+  }
+
   //sweetAllert error
   alertConfirmation() {
     Swal.fire({
@@ -118,14 +133,32 @@ export class FormResepComponent implements OnInit {
     })
   }
 
+  ingredientsForm: FormGroup = new FormGroup({
+    id: new FormControl(),
+    ingredientId: new FormControl(),
+    qty: new FormControl()
+  })
+
   //template update
   setFormValue(recipe: Recipe) {
+    console.log(recipe);
     this.recipeForm.addControl('id', new FormControl);
     this.recipeForm.get('id')?.setValue(this.id);
     this.recipeForm.get('name')?.setValue(recipe.name);
-    this.recipeForm.get('recipeDetail')?.setValue(recipe.detail);
+    this.recipeForm.get('recipeDetail')?.setValue(recipe.recipeDetail);
     this.recipeForm.get('category')?.setValue(recipe.category);
-    this.recipeForm.get('ingredient')?.setValue(recipe.ingredients);
+    const ingre: FormArray = this.recipeForm.get('ingredients') as FormArray;
+    recipe.ingredients?.forEach(
+      (ingres) => {
+
+        ingre.push(new FormGroup({
+          ingredientId: new FormControl(ingres.ingredientId, [Validators.required]),
+          qty: new FormControl(ingres.qty, [
+            Validators.required,
+          ]),
+        }))
+      }
+    )
   }
 
   //selected recipe by id
@@ -143,6 +176,7 @@ export class FormResepComponent implements OnInit {
           this.tableIngredient = true;
           this.ingredientsRecipe = recipe;
           this.setFormValue(recipe);
+          console.log(this.recipeForm);
         }
       },
       (error) => console.error(error),
@@ -150,4 +184,3 @@ export class FormResepComponent implements OnInit {
     )
   }
 }
-

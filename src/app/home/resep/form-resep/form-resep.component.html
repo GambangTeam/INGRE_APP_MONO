@@ -31,6 +31,7 @@
           >
           <textarea
             formControlName="recipeDetail"
+            type="text"
             class="
               form-textarea
               mt-1
@@ -84,7 +85,12 @@
           <label for="" class="font-nunito text-sm my-2 font-medium"
             >Image Recipe</label
           >
-          <input type="file" class="text-sm" />
+          <input
+            type="file"
+            class="text-sm"
+            formControlName="photo"
+            (change)="handleFileUpload($event)"
+          />
         </div>
         <table
           *ngIf="tableIngredient"

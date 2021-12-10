@@ -32,6 +32,11 @@ export class AuthComponent implements OnInit {
             sessionStorage.removeItem('username');
             this.router.navigateByUrl('');
           }
+          else if (action == '') {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('username');
+            this.router.navigateByUrl('');
+          }
         })
   }
 

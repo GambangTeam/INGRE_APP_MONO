@@ -23,11 +23,21 @@ export class ResepComponent implements OnInit {
         next: (recipe) => {
           this.isLoading = false
           this.recipes = recipe
+          console.log(recipe);
         },
         error: () => {
           this.isLoading = true
           console.error
         },
+        complete: () => { }
+      })
+  }
+
+  onDeleteRecipe(id: string): void {
+    this.recipeService.delete(id)
+      .subscribe({
+        next: () => { },
+        error: (error) => { console.error(error) },
         complete: () => { }
       })
   }

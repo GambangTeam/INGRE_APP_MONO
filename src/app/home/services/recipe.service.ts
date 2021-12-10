@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Category } from '../models/category';
 import { Ingredients } from '../models/ingredients';
 import { Recipe } from '../models/recipe';
@@ -10,6 +11,7 @@ import { Recipe } from '../models/recipe';
 })
 export class RecipeService {
 
+  private recipeSubject: Subject<boolean> = new Subject<boolean>();
   constructor(private readonly http: HttpClient) { }
 
   public getAllCategory(): Observable<Category[]> {
@@ -30,5 +32,14 @@ export class RecipeService {
     } else {
       return this.http.post<any>('/api/admin/product/recipe', recipe);
     }
+  }
+  public delete(id: string): Observable<void> {
+    return this.http.delete<void>(`/api/admin/product/recipe/${id}`)
+      .pipe(
+        map(() => this.recipeSubject.next(true))
+      )
+  }
+  public listUpdated(): Observable<boolean> {
+    return this.recipeSubject.asObservable();
   }
 }
