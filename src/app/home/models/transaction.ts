@@ -1,5 +1,5 @@
 export interface Transaction {
-  id?: number;
+  id?: string;
   name: string;
   recipeName: string;
   total: number;

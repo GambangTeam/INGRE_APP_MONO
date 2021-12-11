@@ -65,5 +65,13 @@ export class UsersComponent implements OnInit {
         }
       })
   }
+  onDeleteUser(id: string): void {
+    this.transactionService.delete(id)
+      .subscribe({
+        next: () => { },
+        error: (error) => { console.error(error) },
+        complete: () => { }
+      })
+  }
 
 }

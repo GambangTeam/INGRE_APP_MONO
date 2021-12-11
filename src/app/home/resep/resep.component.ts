@@ -15,6 +15,7 @@ export class ResepComponent implements OnInit {
 
   ngOnInit(): void {
     this.init()
+    this.recipeService.listUpdated();
   }
 
   init(): void {

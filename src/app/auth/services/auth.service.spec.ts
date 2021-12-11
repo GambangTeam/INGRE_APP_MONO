@@ -20,10 +20,10 @@ describe('AuthService', () => {
   })
 
   it('Should return Obsevable<LoginToken>', () => {
-    const url = '/api/auth/login';
+    const url = '/api/auth/admin';
     const mockLogin: Login = {
-      username: 'user1@test.com',
-      password: 'user1'
+      username: 'admin@ingre.com',
+      password: 'admin1'
     }
     const mockLoginToken: LoginToken = {
       token: '2130das231ss'

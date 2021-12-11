@@ -33,12 +33,7 @@ export class RecipeService {
   public save(recipe: Recipe, image?: File): Observable<any> {
     const formData: FormData = new FormData();
 
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'multipart/mixed' })
-    }
     let recipeDto = JSON.stringify(recipe)
-
-
     formData.append('recipeDto', recipeDto);
 
     console.log(recipeDto);

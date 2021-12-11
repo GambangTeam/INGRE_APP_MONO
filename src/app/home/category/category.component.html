@@ -2,42 +2,8 @@
   <div class="lg:px-4 px-1 lg:py-4 py-1 border-b-2 shadow-md border-orange-600">
     <h1 class="font-nunito font-semibold text-2xl">Dashboard Recipe Admin</h1>
   </div>
-  <div class="px-3 py-8 flex flex-col">
-    <div class="flex items-center justify-between">
-      <button
-        routerLink="form-recipe"
-        class="
-          font-semibold
-          bg-primary
-          lg:px-5
-          px-2
-          py-2
-          rounded-lg
-          text-white
-          flex
-          items-center
-          lg:text-base
-          text-xs
-        "
-      >
-        Add
-        <span class="lg:ml-4 ml-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="lg:h-6 lg:w-6 w-3 h-3"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-        </span>
-      </button>
+  <div class="px-3 py-5 flex flex-col">
+    <div class="flex items-center justify-end">
       <div class="relative items-center border-2 rounded lg:mx-0 mx-1 bg-white">
         <input
           type="text"
@@ -56,5 +22,45 @@
         </svg>
       </div>
     </div>
+    <form
+      class="w-full"
+      [formGroup]="categoryForm"
+      multipart
+      (ngSubmit)="saveCategory()"
+    >
+      <div class="flex flex-col my-5">
+        <label for="" class="font-nunito text-lg font-medium">Category</label>
+        <input
+          formControlName="name"
+          type="text"
+          class="
+            px-2
+            py-1
+            text-sm
+            rounded-lg
+            border-2 border-gray-200
+            focus:outline-none focus:border-orange-400
+          "
+        />
+      </div>
+      <button
+        routerLink="form-recipe"
+        class="
+          font-semibold
+          bg-primary
+          lg:px-5
+          px-2
+          py-2
+          rounded-lg
+          text-white
+          flex
+          items-center
+          lg:text-base
+          text-xs
+        "
+      >
+        Save
+      </button>
+    </form>
   </div>
 </div>

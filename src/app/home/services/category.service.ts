@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Category } from '../models/category';
 
 @Injectable({
@@ -17,14 +18,25 @@ export class CategoryService {
 
   public save(categories: Category): Observable<any> {
     if (categories.id) {
-      return this.http.put<any>('/api/product/categories', categories);
+      return this.http.put<any>('/api/product/category', categories);
     } else {
-      return this.http.post<any>('/api/product/categories', categories);
+      return this.http.post<any>('/api/product/category', categories);
     }
   }
 
   public listUpdated(): Observable<boolean> {
     return this.CategorySubject.asObservable();
+  }
+
+  // public getById(id: string): Observable<Category> {
+  //   return this.http.get<Category>(`/api/product/categories/${id}`);
+  // }
+
+  public delete(id: string): Observable<void> {
+    return this.http.delete<void>(`/api/product/categories/${id}`)
+      .pipe(
+        map(() => this.CategorySubject.next(true))
+      )
   }
 
 }

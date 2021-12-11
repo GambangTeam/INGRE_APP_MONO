@@ -42,8 +42,8 @@ describe('AuthComponent', () => {
   })
 
   it('Credentials field validity', () => {
-    form('user1@test.com', 'user1');
-    const loginMock: Login = { username: 'user1@test.com', password: 'user1' }
+    form('admin1@ingre.com', 'admin1');
+    const loginMock: Login = { username: 'admin1@ingre.com', password: 'admin1' }
     expect(component.loginForm.value).toEqual(loginMock)
   })
   it('Successfully login from onSubmit()', () => {
@@ -55,8 +55,8 @@ describe('AuthComponent', () => {
       .callFake((): Observable<LoginToken> => {
         return from([mockTokenLogin])
       })
-    component.loginForm.get('username')?.setValue('user1@test.com');
-    component.loginForm.get('password')?.setValue('user1');
+    component.loginForm.get('username')?.setValue('admin1@ingre.com');
+    component.loginForm.get('password')?.setValue('admin1');
     component.onFormSubmit();
     expect(spy).toHaveBeenCalled();
   })

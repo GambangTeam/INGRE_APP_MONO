@@ -25,6 +25,12 @@ export class TransactionService {
   public transactionDelivery(id: String): Observable<void> {
     return this.http.put<any>(`/api/admin/transaction/delivery/success/${id}`, null);
   }
+  public delete(id: string): Observable<void> {
+    return this.http.delete<void>(`/api/admin/transaction/${id}`)
+      .pipe(
+        map(() => this.transactionSubject.next(true))
+      )
+  }
   public listUpdated(): Observable<boolean> {
     return this.transactionSubject.asObservable();
   }

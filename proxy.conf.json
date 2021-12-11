@@ -1,6 +1,6 @@
 {
   "/api" : {
-    "target": "http://10.10.50.83:8080/api",
+    "target": "https://ingre-api-mono.herokuapp.com/api",
     "logLevel": "debug",
     "changeOrigin": true,
     "pathRewrite" : {
