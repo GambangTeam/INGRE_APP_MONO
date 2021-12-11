@@ -81,7 +81,7 @@ export class FormResepComponent implements OnInit {
   onSubmitRecipe(): void {
     const recipe: Recipe = this.recipeForm.value
     console.log(recipe);
-    this.recipeService.save(this.recipeForm.value).subscribe({
+    this.recipeService.save(recipe, this.photo).subscribe({
       next: (any) => {
         if (this.recipeForm.get('id')?.value) {
           alert(`${this.recipeForm.get('name')?.value} berhasil diupdate`);
@@ -106,7 +106,6 @@ export class FormResepComponent implements OnInit {
     })
 
   }
-
   handleFileUpload(event: any): void {
     const files: FileList = event.target.files;
     console.log(event.target.files);
