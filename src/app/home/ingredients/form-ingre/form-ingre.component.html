@@ -14,7 +14,7 @@
             >Name</label
           >
           <input
-            formControlName="stock"
+            formControlName="name"
             type="text"
             class="
               px-2
@@ -36,7 +36,7 @@
           >
           <input
             formControlName="price"
-            type="text"
+            type="number"
             class="
               px-2
               py-1
@@ -47,13 +47,14 @@
               border-2 border-gray-200
               focus:outline-none focus:border-orange-400
             "
+            min="1000"
           />
         </div>
         <div class="flex flex-col my-5">
           <label
             for=""
             class="select-none font-nunito lg:text-base text-sm font-medium"
-            >Satuan</label
+            >Item Unit</label
           >
           <input
             formControlName="unit"

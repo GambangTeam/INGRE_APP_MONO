@@ -87,7 +87,6 @@
           >
           <input
             type="file"
-            formControlName="photo"
             (change)="handleFileUpload($event)"
             class="text-sm"
           />
@@ -105,7 +104,7 @@
                 Qty
               </th>
               <th class="text-left px-3 py-1 font-nunito lg:text-sm text-xs">
-                Satuan
+                Item Unit
               </th>
             </tr>
           </thead>
@@ -186,6 +185,7 @@
                       border-gray-200
                       focus:outline-none focus:border-orange-500
                     "
+                    min="1"
                     name="quantity"
                   />
                 </div>

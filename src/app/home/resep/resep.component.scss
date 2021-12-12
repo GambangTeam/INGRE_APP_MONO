@@ -1,0 +1,13 @@
+.ingredients{
+  height: 50px;
+  overflow: hidden;
+}
+
+
+.show:focus + .hide{
+  display: block;
+}
+
+.hide{
+  display: none;
+}

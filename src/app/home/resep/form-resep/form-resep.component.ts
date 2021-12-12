@@ -23,7 +23,8 @@ export class FormResepComponent implements OnInit {
   tableIngredient: boolean = false;
   ingredientsRecipe?: Recipe;
   igredientsData!: LotsIngredients;
-  photo?: File;
+  upload?: File;
+  isLoading: Boolean = false;
 
   recipeForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -37,7 +38,6 @@ export class FormResepComponent implements OnInit {
     private readonly activatedRoutes: ActivatedRoute,
     private readonly recipeService: RecipeService,
     private readonly router: Router,
-    private fromBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -80,20 +80,17 @@ export class FormResepComponent implements OnInit {
   // onSubmitFormRecipe
   onSubmitRecipe(): void {
     const recipe: Recipe = this.recipeForm.value
-    console.log(recipe);
-    this.recipeService.save(recipe, this.photo).subscribe({
+    this.isLoading = true;
+    this.recipeService.save(recipe, this.upload).subscribe({
       next: (any) => {
         if (this.recipeForm.get('id')?.value) {
-          alert(`${this.recipeForm.get('name')?.value} berhasil diupdate`);
           this.router.navigateByUrl('recipe')
-          console.log(any)
           this.successConfirmation()
+          this.isLoading = false;
           this.recipeForm.reset();
         }
         else {
-          alert(`${this.recipeForm.get('name')?.value} {berhasil disimpan`);
-          this.recipeForm.reset();
-          console.log(any)
+          this.isLoading = false;
           this.successConfirmation()
           this.recipeForm.reset();
         }
@@ -110,8 +107,7 @@ export class FormResepComponent implements OnInit {
     const files: FileList = event.target.files;
     console.log(event.target.files);
     if (files) {
-      this.photo = files.item(0) as File;
-      this.recipeForm.get('photo')?.setValue(this.photo);
+      this.upload = files.item(0) as File;
     }
   }
 

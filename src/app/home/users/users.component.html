@@ -78,7 +78,7 @@
                       rounded-md
                       py-1
                       text-white
-                      bg-gray-500
+                      bg-green-400
                       cursor-not-allowed
                     "
                     disabled
@@ -92,7 +92,7 @@
                       rounded-md
                       mx-2
                       py-1
-                      bg-gray-500
+                      bg-blue-400
                       text-white
                       cursor-not-allowed
                     "
@@ -111,7 +111,7 @@
                         rounded-md
                         py-1
                         text-white
-                        bg-gray-500
+                        bg-green-400
                         cursor-not-allowed
                       "
                       disabled
@@ -122,7 +122,7 @@
                   <ng-template #elseTemplate>
                     <button
                       (click)="payment(item.id)"
-                      class="px-2 rounded-md py-1 text-white bg-green-600"
+                      class="px-2 rounded-md py-1 text-white bg-green-700"
                     >
                       Success
                     </button>
@@ -130,7 +130,7 @@
 
                   <button
                     (click)="delivery(item.id)"
-                    class="px-2 rounded-md mx-2 py-1 bg-blue-600 text-white"
+                    class="px-2 rounded-md mx-2 py-1 bg-blue-700 text-white"
                   >
                     Finish
                   </button>
@@ -158,4 +158,22 @@
       </table>
     </div>
   </div>
+</div>
+<div
+  class="
+    absolute
+    inset-0
+    bg-black bg-opacity-40
+    flex flex-col
+    justify-center
+    text-center
+    py-4
+    text-white
+    w-full
+    h-full
+  "
+  *ngIf="isLoading"
+>
+  <h2 class="text-sm font-semibold py-5">Loading....</h2>
+  <app-loading></app-loading>
 </div>

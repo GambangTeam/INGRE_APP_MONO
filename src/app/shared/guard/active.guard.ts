@@ -21,10 +21,11 @@ export class ActiveGuard implements CanActivate, CanActivateChild {
 
   private authorize(): boolean {
 
-    const authorize: boolean = (sessionStorage.getItem('token') != null)
+    const authorize: boolean = ((sessionStorage.getItem('token') && sessionStorage.getItem('username') && sessionStorage.getItem('kodeKey')) != null)
+
 
     if (!authorize) {
-      this.router.navigateByUrl('auth');
+      this.router.navigateByUrl('auth/login');
     }
 
     return authorize;

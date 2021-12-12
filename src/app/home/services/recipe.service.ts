@@ -32,15 +32,12 @@ export class RecipeService {
   }
   public save(recipe: Recipe, image?: File): Observable<any> {
     const formData: FormData = new FormData();
-
-    let recipeDto = JSON.stringify(recipe)
-    formData.append('recipeDto', recipeDto);
-
-    console.log(recipeDto);
+    console.log(image);
+    formData.append('recipeDto', JSON.stringify(recipe));
+    console.log(recipe);
     if (image) {
-      formData.append('upload', image, image.name)
+      formData.append('upload', image)
     }
-    console.log(formData.get('recipeDto'), formData.get('upload'));
     if (recipe.id) {
       formData.append('id', `${recipe.id}`);
       return this.http.put<any>('/api/admin/product/recipe', formData);
@@ -49,7 +46,7 @@ export class RecipeService {
     }
   }
   public delete(id: string): Observable<void> {
-    return this.http.delete<void>(`/ api / admin / product / recipe / ${id}`)
+    return this.http.delete<void>(`/api/admin/product/recipe/${id}`)
       .pipe(
         map(() => this.recipeSubject.next(true))
       )

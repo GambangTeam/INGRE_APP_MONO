@@ -28,12 +28,10 @@ export class CategoryService {
     return this.CategorySubject.asObservable();
   }
 
-  // public getById(id: string): Observable<Category> {
-  //   return this.http.get<Category>(`/api/product/categories/${id}`);
-  // }
+
 
   public delete(id: string): Observable<void> {
-    return this.http.delete<void>(`/api/product/categories/${id}`)
+    return this.http.delete<void>(`/api/product/category/${id}`)
       .pipe(
         map(() => this.CategorySubject.next(true))
       )

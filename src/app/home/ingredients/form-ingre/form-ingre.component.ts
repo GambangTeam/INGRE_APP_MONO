@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./form-ingre.component.scss']
 })
 export class FormIngreComponent implements OnInit {
-
+  isLoading: Boolean = false;
   id: string | null = null;
   httpError: Boolean = false;
 
@@ -61,16 +61,20 @@ export class FormIngreComponent implements OnInit {
   }
 
   saveIngredients() {
+    this.isLoading = true;
     this.ingredientsService.save(this.ingreForm.value).subscribe({
 
       next: () => {
         if (this.ingreForm.get('id')?.value) {
-          alert(`${this.ingreForm.get('name')?.value} berhasil diupdate`);
+          this.isLoading = false;
+          this.successConfirmation();
           this.route.navigateByUrl('ingre')
         }
         else {
-          alert(`${this.ingreForm.get('name')?.value} {berhasil disimpan`);
           this.ingreForm.reset();
+          this.isLoading = false;
+          this.successConfirmation();
+          this.route.navigateByUrl('ingre')
         }
       },
       error: () => {
@@ -94,12 +98,20 @@ export class FormIngreComponent implements OnInit {
     }
   }
 
+  //sweetAllert error
   alertConfirmation() {
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'Something went wrong!',
-      footer: '<p>Semua Field Wajib di isi</p>'
+      text: 'Something went wrong! Pastikan semua field sudah di isi',
+    })
+  }
+  //swetAllert success
+  successConfirmation() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Yesss...',
+      text: 'Data Behasil Disimpan',
     })
   }
 }

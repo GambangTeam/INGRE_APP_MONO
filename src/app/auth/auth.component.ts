@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginToken } from './models/auth';
 import { isNgContainer } from '@angular/compiler';
+import { HostListener } from '@angular/core';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { isNgContainer } from '@angular/compiler';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
+@HostListener('window:popstate', ['$event'])
 export class AuthComponent implements OnInit {
   isLoading: Boolean = false;
   httpError: Boolean = false;
@@ -22,6 +24,13 @@ export class AuthComponent implements OnInit {
     private readonly service: AuthService
   ) { }
   ngOnInit(): void {
+    this.init();
+
+  }
+  init() {
+    if (sessionStorage.getItem('token')) {
+      this.router.navigateByUrl('dashboard')
+    }
     this.activatedRoute.params
       .pipe(
         map((params: any) => params.action)
@@ -30,21 +39,22 @@ export class AuthComponent implements OnInit {
           if (action == 'logout') {
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('username');
-            this.router.navigateByUrl('');
+            this.router.navigateByUrl('dashboard');
           }
-          else if (action == '') {
+          else if (action == 'login') {
+            this.router.navigateByUrl('')
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('username');
-            this.router.navigateByUrl('');
+            this.router.navigateByUrl('dashboard');
           }
         })
   }
-
   loginForm: FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    username: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(4)])
   }
   )
+
 
   onFormSubmit(): void {
     this.isLoading = true
@@ -55,10 +65,12 @@ export class AuthComponent implements OnInit {
           (respon) => {
             sessionStorage.setItem('token', respon.token);
             this.isLoading = false
-            this.router.navigateByUrl('');
+            this.router.navigateByUrl('dashboard');
+            sessionStorage.setItem('kodeKey', '@mamen12');
           },
           (error) => {
             console.log(error)
+            this.init();
             this.httpError = true
             this.isLoading = false
           });

@@ -9,8 +9,9 @@ import { RecipeService } from '../services/recipe.service';
 })
 export class ResepComponent implements OnInit {
   recipes: Recipe[] = []
-  isLoading: boolean = false;
+  isLoading: boolean = true;
   searchText!: string;
+  showModal: Boolean = false;
   constructor(private readonly recipeService: RecipeService) { }
 
   ngOnInit(): void {
@@ -25,6 +26,7 @@ export class ResepComponent implements OnInit {
           this.isLoading = false
           this.recipes = recipe
           console.log(recipe);
+
         },
         error: () => {
           this.isLoading = true
@@ -35,12 +37,19 @@ export class ResepComponent implements OnInit {
   }
 
   onDeleteRecipe(id: string): void {
+    this.isLoading = true;
     this.recipeService.delete(id)
       .subscribe({
         next: () => { },
         error: (error) => { console.error(error) },
-        complete: () => { }
+        complete: () => {
+          this.init();
+          this.isLoading = false;
+        }
       })
   }
 
+  toggleModal() {
+    this.showModal = !this.showModal;
+  }
 }
