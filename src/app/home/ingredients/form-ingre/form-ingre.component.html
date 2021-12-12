@@ -32,32 +32,11 @@
           <label
             for=""
             class="select-none font-nunito lg:text-base text-sm font-medium"
-            >Stock</label
-          >
-          <input
-            formControlName="stock"
-            type="text"
-            class="
-              px-2
-              py-1
-              rounded-lg
-              text-sm
-              lg:w-2/3
-              w-[300px]
-              border-2 border-gray-200
-              focus:outline-none focus:border-orange-400
-            "
-          />
-        </div>
-        <div class="flex flex-col my-5">
-          <label
-            for=""
-            class="select-none font-nunito lg:text-base text-sm font-medium"
             >Price</label
           >
           <input
             formControlName="price"
-            type="text"
+            type="number"
             class="
               px-2
               py-1
@@ -68,13 +47,14 @@
               border-2 border-gray-200
               focus:outline-none focus:border-orange-400
             "
+            min="1000"
           />
         </div>
         <div class="flex flex-col my-5">
           <label
             for=""
             class="select-none font-nunito lg:text-base text-sm font-medium"
-            >Satuan</label
+            >Item Unit</label
           >
           <input
             formControlName="unit"

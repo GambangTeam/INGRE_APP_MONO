@@ -1,1 +1,179 @@
-<p>users works!</p>
+<div class="lg:mx-5 mx-1 lg:my-4 my-2 shadow-lg rounded-lg overflow-hidden">
+  <div class="lg:px-4 px-1 lg:py-4 py-1 border-b-2 shadow-md border-orange-600">
+    <h1 class="font-nunito font-semibold text-2xl">
+      Dashboard User Transaction Admin
+    </h1>
+  </div>
+  <div class="px-3 py-8 flex flex-col">
+    <div class="flex items-center justify-end">
+      <div
+        class="
+          relative
+          right-4
+          items-center
+          border-2
+          rounded
+          lg:mx-0
+          mx-1
+          bg-white
+        "
+      >
+        <input
+          type="text"
+          class="lg:px-4 px-2 py-2 lg:w-80 w-40 lg:text-base text-xs"
+          placeholder="Search..."
+          [(ngModel)]="searchText"
+        />
+        <svg
+          class="w-6 h-6 text-gray-600 absolute right-2 top-2 bg-white"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="text-sm py-4">
+      <table class="rounded-md overflow-hidden shadow-md">
+        <thead class="bg-primary text-white">
+          <tr>
+            <th class="text-left px-2 py-1">Name</th>
+            <th class="text-left px-2 py-1">Recipe</th>
+            <th class="text-left px-2 py-1">Total</th>
+            <th class="text-left px-2 py-1">Address</th>
+            <th class="text-left px-2 py-1">Status</th>
+            <th class="text-left px-2 py-1">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="border-b"
+            *ngFor="let item of transaction | searchFilter: searchText"
+          >
+            <td class="border-b border-r text-left px-2 py-1">
+              {{ item.name }}
+            </td>
+            <td class="border-b border-r text-left px-2 py-1">
+              {{ item.recipeName }}
+            </td>
+            <td class="border-b border-r text-left px-2 py-1">
+              {{ item.total }}
+            </td>
+            <td class="border-b border-r text-left px-2 py-1">
+              {{ item.address }}
+            </td>
+            <td class="border-b border-r text-left px-2 py-1">
+              {{ item.stat }}
+            </td>
+            <td class="border-b border-r text-left px-2 py-1">
+              <div class="flex">
+                <ng-container *ngIf="item.stat === 'Done'; else done">
+                  <button
+                    (click)="payment(item.id)"
+                    class="
+                      px-2
+                      rounded-md
+                      py-1
+                      text-white
+                      bg-green-400
+                      cursor-not-allowed
+                    "
+                    disabled
+                  >
+                    Success
+                  </button>
+                  <button
+                    (click)="delivery(item.id)"
+                    class="
+                      px-2
+                      rounded-md
+                      mx-2
+                      py-1
+                      bg-blue-400
+                      text-white
+                      cursor-not-allowed
+                    "
+                  >
+                    Finish
+                  </button>
+                </ng-container>
+                <ng-template #done>
+                  <ng-container
+                    *ngIf="item.stat === 'On Delivery'; else elseTemplate"
+                  >
+                    <button
+                      (click)="payment(item.id)"
+                      class="
+                        px-2
+                        rounded-md
+                        py-1
+                        text-white
+                        bg-green-400
+                        cursor-not-allowed
+                      "
+                      disabled
+                    >
+                      Success
+                    </button>
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                    <button
+                      (click)="payment(item.id)"
+                      class="px-2 rounded-md py-1 text-white bg-green-700"
+                    >
+                      Success
+                    </button>
+                  </ng-template>
+
+                  <button
+                    (click)="delivery(item.id)"
+                    class="px-2 rounded-md mx-2 py-1 bg-blue-700 text-white"
+                  >
+                    Finish
+                  </button>
+                </ng-template>
+                <button (click)="onDeleteUser(item.id)">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 text-red-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div
+  class="
+    absolute
+    inset-0
+    bg-black bg-opacity-40
+    flex flex-col
+    justify-center
+    text-center
+    py-4
+    text-white
+    w-full
+    h-full
+  "
+  *ngIf="isLoading"
+>
+  <h2 class="text-sm font-semibold py-5">Loading....</h2>
+  <app-loading></app-loading>
+</div>

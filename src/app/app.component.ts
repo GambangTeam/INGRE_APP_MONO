@@ -10,7 +10,7 @@ export class AppComponent {
 
 
   isLoggedIn(): boolean {
-    return (sessionStorage.getItem('token') !== null)
+    return ((sessionStorage.getItem('token') && sessionStorage.getItem('username') && sessionStorage.getItem('kodeKey')) !== null)
   }
 
   sidebar = false

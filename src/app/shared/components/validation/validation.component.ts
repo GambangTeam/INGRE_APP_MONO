@@ -20,7 +20,8 @@ export class ValidationComponent implements OnInit {
   messages: any = {
     "required": 'Field harus diisi',
     "minlength": 'Field %s minimal harus lebih panjang dari %s.',
-    "maxlength": 'Field %s minimal harus lebih pendek dari %s.'
+    "maxlength": 'Field %s minimal harus lebih pendek dari %s.',
+    "email": "Masukkan Email yang valid"
   }
 
   isFieldValid(): boolean {

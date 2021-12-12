@@ -6,6 +6,8 @@ import { HomeComponent } from './home.component';
 import { IngredientsComponent } from './ingredients/ingredients.component';
 import { UsersComponent } from './users/users.component';
 import { RouterModule } from '@angular/router';
+import { SearchFilterPipe } from '../shared/pipe/search-filter.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -15,10 +17,11 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [
     HomeComponent
-  ]
+  ],
+  providers: [SharedModule]
 })
 export class HomeModule { }

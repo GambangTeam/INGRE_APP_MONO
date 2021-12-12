@@ -31,6 +31,7 @@
           >
           <textarea
             formControlName="recipeDetail"
+            type="text"
             class="
               form-textarea
               mt-1
@@ -52,6 +53,7 @@
           <label class="block text-left">
             <span class="text-gray-700">Category</span>
           </label>
+
           <select
             formControlName="category"
             class="
@@ -71,7 +73,7 @@
             <option value="" selected disabled>Pilih Category</option>
             <option
               aria-placeholder="Pilih satu"
-              *ngFor="let category of categorys"
+              *ngFor="let category of categorys | searchFilter: searchText"
               value="{{ category.category }}"
               class="text-sm"
             >
@@ -83,8 +85,46 @@
           <label for="" class="font-nunito text-sm my-2 font-medium"
             >Image Recipe</label
           >
-          <input type="file" class="text-sm" />
+          <input
+            type="file"
+            (change)="handleFileUpload($event)"
+            class="text-sm"
+          />
         </div>
+        <table
+          *ngIf="tableIngredient"
+          class="rounded-md overflow-hidden shadow-md"
+        >
+          <thead>
+            <tr class="bg-primary text-white">
+              <th class="text-left px-3 py-1 font-nunito lg:text-sm text-xs">
+                Name
+              </th>
+              <th class="text-left px-3 py-1 font-nunito lg:text-sm text-xs">
+                Qty
+              </th>
+              <th class="text-left px-3 py-1 font-nunito lg:text-sm text-xs">
+                Item Unit
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of ingredientsRecipe?.ingredients"
+              class="border-b border-gray-400"
+            >
+              <td class="px-3 py-1 font-nunito text-xs md:text-sm">
+                {{ item.ingredient.name }}
+              </td>
+              <td class="px-3 py-1 font-nunito text-xs md:text-sm">
+                {{ item.qty }}
+              </td>
+              <td class="px-3 py-1 font-nunito text-xs md:text-sm">
+                {{ item.ingredient.unit }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div class="my-4">
           <button
             type="button"
@@ -145,6 +185,7 @@
                       border-gray-200
                       focus:outline-none focus:border-orange-500
                     "
+                    min="1"
                     name="quantity"
                   />
                 </div>
@@ -152,7 +193,19 @@
             </ng-container>
           </div>
         </div>
-        <button type="submit" class="px-3 py-2 bg-primary text-white">
+        <button
+          type="submit"
+          class="
+            px-3
+            py-2
+            bg-primary
+            text-white
+            font-nunito
+            rounded-md
+            text-sm
+            lg:text-base
+          "
+        >
           Simpan
         </button>
       </form>

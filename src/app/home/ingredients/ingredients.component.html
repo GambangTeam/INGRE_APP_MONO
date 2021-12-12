@@ -40,45 +40,45 @@
           </svg>
         </span>
       </button>
-      <div class="flex border-2 rounded lg:mx-0 mx-1">
+      <div class="relative items-center border-2 rounded lg:mx-0 mx-1 bg-white">
         <input
           type="text"
           class="lg:px-4 px-2 py-2 lg:w-80 w-40 lg:text-base text-xs"
           placeholder="Search..."
+          [(ngModel)]="searchText"
         />
-        <button class="flex items-center justify-center px-4 border-l">
-          <svg
-            class="w-6 h-6 text-gray-600"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
-            />
-          </svg>
-        </button>
+        <svg
+          class="w-6 h-6 text-gray-600 absolute right-2 top-2 bg-white"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
+          />
+        </svg>
       </div>
     </div>
     <div class="my-5 mx-2 lg:text-base text-xs w-full">
       <div class="overflow-x-scroll">
-        <table class="table-auto">
-          <thead>
+        <table class="table-auto rounded-md overflow-hidden">
+          <thead class="px-2 py-1 bg-primary text-white">
             <tr>
               <th class="text-left px-3 py-1">Name</th>
               <th class="text-left px-3 py-1">Stock</th>
               <th class="text-left px-3 py-1">Price</th>
               <th class="text-left px-3 py-1">Satuan</th>
-              <th class="text-left px-3 py-1">Update</th>
-              <th class="text-left px-3 py-1">Delete</th>
+              <th class="text-left px-3 py-1">Action</th>
             </tr>
           </thead>
           <ng-container *ngIf="!isLoading; else table">
-            <tbody>
-              <tr *ngFor="let item of ingres">
+            <tbody class="truncate">
+              <tr *ngFor="let item of ingres | searchFilter: searchText">
                 <td class="text-left px-3 py-1">{{ item.name }}</td>
                 <td class="text-left px-3 py-1">{{ item.stock }}</td>
-                <td class="text-left px-3 py-1">{{ item.price }}</td>
+                <td class="text-left px-3 py-1">
+                  {{ item.price | currency: "IDR ":"symbol":"3.0" }}
+                </td>
                 <td class="text-left px-3 py-1">{{ item.unit }}</td>
                 <td class="text-left px-3 py-1">
                   <button
@@ -92,134 +92,73 @@
                       font-semibold
                     "
                   >
-                    Update
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      />
+                    </svg>
                   </button>
-                </td>
-
-                <td class="text-left px-3 py-1">
                   <button
                     (click)="onDeleteIngre(item.id!)"
                     class="
                       px-2
                       py-2
+                      mx-2
                       bg-red-700
                       text-white
                       rounded-md
                       font-semibold
                     "
                   >
-                    Delete
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
                   </button>
                 </td>
               </tr>
             </tbody>
           </ng-container>
-          <ng-template #table>
-            <tbody class="animate-pulse">
-              <tr>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-              </tr>
-              <tr>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-              </tr>
-              <tr>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-              </tr>
-              <tr>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-              </tr>
-              <tr>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-                <td
-                  class="h-4 w-32 mx-2 my-1 border-r-2 border-b-2 bg-gray-400"
-                ></td>
-              </tr>
-            </tbody>
-          </ng-template>
+          <ng-template #table> </ng-template>
         </table>
       </div>
     </div>
   </div>
+</div>
+<div
+  class="
+    absolute
+    inset-0
+    bg-black bg-opacity-40
+    flex flex-col
+    justify-center
+    text-center
+    py-4
+    text-white
+    w-full
+    h-full
+  "
+  *ngIf="isLoading"
+>
+  <h2 class="text-sm font-semibold py-5">Loading....</h2>
+  <app-loading></app-loading>
 </div>

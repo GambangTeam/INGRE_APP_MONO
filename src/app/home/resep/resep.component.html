@@ -2,7 +2,7 @@
   <div class="lg:px-4 px-1 lg:py-4 py-1 border-b-2 shadow-md border-orange-600">
     <h1 class="font-nunito font-semibold text-2xl">Dashboard Recipe Admin</h1>
   </div>
-  <div class="px-3 py-8 flex flex-col overflow-x-scroll">
+  <div class="px-3 py-8 flex flex-col">
     <div class="flex items-center justify-between">
       <button
         routerLink="form-recipe"
@@ -38,26 +38,189 @@
           </svg>
         </span>
       </button>
-      <div class="flex border-2 rounded lg:mx-0 mx-1">
+      <div class="relative items-center border-2 rounded lg:mx-0 mx-1 bg-white">
         <input
           type="text"
           class="lg:px-4 px-2 py-2 lg:w-80 w-40 lg:text-base text-xs"
           placeholder="Search..."
+          [(ngModel)]="searchText"
         />
-        <button class="flex items-center justify-center px-4 border-l">
-          <svg
-            class="w-6 h-6 text-gray-600"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
-            />
-          </svg>
-        </button>
+        <svg
+          class="w-6 h-6 text-gray-600 absolute right-2 top-2 bg-white"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
+          />
+        </svg>
       </div>
     </div>
-    <div class="my-5 mx-2 lg:text-base text-xs">okeeey</div>
+    <div
+      class="
+        my-5
+        mx-2
+        lg:text-base
+        text-xs
+        flex flex-wrap
+        rounded-md
+        overflow-scroll
+      "
+    >
+      <table
+        class="
+          border-collapse border border-gray-400
+          table table-auto
+          my-2
+          rounded-md
+          overflow-x-scroll
+          truncate
+        "
+      >
+        <thead class="bg-primary text-white px-2 py-1 rounded-md">
+          <tr>
+            <th class="border px-3 py-1 border-gray-400">Name</th>
+            <th class="border px-3 py-1 border-gray-400">Category</th>
+            <th class="border px-3 py-1 border-gray-400">Ingredients</th>
+            <th class="border px-3 py-1 border-gray-400">Action</th>
+          </tr>
+        </thead>
+        <tbody class="">
+          <tr
+            *ngFor="let recipe of recipes | searchFilter: searchText"
+            class="inset-0"
+          >
+            <td class="px-3 py-1 border align-top border-gray-400">
+              {{ recipe.name }}
+            </td>
+            <td class="px-3 py-1 border align-top border-gray-400">
+              {{ recipe.category }}
+            </td>
+            <td class="px-3 py-1 border align-top border-gray-400 ingredient">
+              <div>
+                <div class="ingredients">
+                  <p *ngFor="let item of recipe.ingredients">
+                    {{ item.ingredient.name }},
+                  </p>
+                </div>
+                <button class="show text-primary text-left w-full py-2">
+                  lainnya...
+                </button>
+                <div class="hide">
+                  <div
+                    class="
+                      absolute
+                      inset-0
+                      lg:right-0
+                      h-screen
+                      w-full
+                      justify-center
+                      flex flex-col
+                      items-center
+                      lg:items-end
+                    "
+                  >
+                    <div class="md:w-3/4 lg:w-1/2 w-full px-1 lg:mx-5">
+                      <div class="w-full bg-white px-4 py-2 rounded-md">
+                        <div
+                          class="
+                            flex
+                            justify-between
+                            py-2
+                            border-b-2 border-primary
+                          "
+                        >
+                          <h1>Detail Ingredient Recipe {{ recipe.name }}</h1>
+                          <button (click)="toggleModal()"></button>
+                        </div>
+                        <div class="w-full py-1">
+                          <div
+                            class="flex w-full justify-between"
+                            *ngFor="let item of recipe.ingredients"
+                          >
+                            <p class="w-2/6">{{ item.ingredient.name }}</p>
+                            <div class="w-4/6 flex justify-between text-left">
+                              <p>
+                                {{
+                                  item.ingredient.price
+                                    | currency: "IDR ":"symbol":"3.0"
+                                }}
+                              </p>
+                              <p>{{ item.ingredient.unit }}</p>
+                              <p>{{ item.qty }} qty</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <td class="px-3 py-1 border border-gray-400 align-top">
+              <button
+                class="px-2.5 rounded-md py-1 text-white bg-green-700"
+                routerLink="/recipe/form-recipe/{{ recipe.id }}"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                  />
+                </svg>
+              </button>
+              <button
+                class="px-2.5 rounded-md py-1 text-white bg-red-600 mx-2"
+                (click)="onDeleteRecipe(recipe.id!)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+</div>
+
+<div
+  class="
+    absolute
+    inset-0
+    bg-black bg-opacity-40
+    flex flex-col
+    justify-center
+    text-center
+    py-4
+    text-white
+    w-full
+    h-full
+  "
+  *ngIf="isLoading"
+>
+  <h2 class="text-sm font-semibold py-5">Loading....</h2>
+  <app-loading></app-loading>
 </div>

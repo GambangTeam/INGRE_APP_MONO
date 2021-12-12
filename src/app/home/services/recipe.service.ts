@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Category } from '../models/category';
 import { Ingredients } from '../models/ingredients';
 import { Recipe } from '../models/recipe';
@@ -9,7 +10,12 @@ import { Recipe } from '../models/recipe';
   providedIn: 'root'
 })
 export class RecipeService {
-
+  httpOptions = {
+    headers: new HttpHeaders({
+      "Content-Type": "multipart/form-data" // 👈
+    })
+  };
+  private recipeSubject: Subject<boolean> = new Subject<boolean>();
   constructor(private readonly http: HttpClient) { }
 
   public getAllCategory(): Observable<Category[]> {
@@ -21,11 +27,31 @@ export class RecipeService {
   public getAllRecipe(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>('/api/product/recipe');
   }
-  public save(recipe: Recipe): Observable<any> {
-    if (recipe.id) {
-      return this.http.put<any>('/api/admin/product/recipe', recipe);
-    } else {
-      return this.http.post<any>('/api/admin/product/recipe', recipe);
+  public getById(id: string): Observable<Recipe> {
+    return this.http.get<Recipe>(`/api/product/recipe/${id}`);
+  }
+  public save(recipe: Recipe, image?: File): Observable<any> {
+    const formData: FormData = new FormData();
+    console.log(image);
+    formData.append('recipeDto', JSON.stringify(recipe));
+    console.log(recipe);
+    if (image) {
+      formData.append('upload', image)
     }
+    if (recipe.id) {
+      formData.append('id', `${recipe.id}`);
+      return this.http.put<any>('/api/admin/product/recipe', formData);
+    } else {
+      return this.http.post<any>('/api/admin/product/recipe', formData);
+    }
+  }
+  public delete(id: string): Observable<void> {
+    return this.http.delete<void>(`/api/admin/product/recipe/${id}`)
+      .pipe(
+        map(() => this.recipeSubject.next(true))
+      )
+  }
+  public listUpdated(): Observable<boolean> {
+    return this.recipeSubject.asObservable();
   }
 }

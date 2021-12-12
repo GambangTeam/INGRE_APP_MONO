@@ -1,24 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { IngredientsRoutingModule } from './ingredients-routing.module';
-import { IngredientsComponent } from './ingredients.component';
-import { FormIngreComponent } from './form-ingre/form-ingre.component';
+import { CategoryRoutingModule } from './category-routing.module';
+import { CategoryComponent } from './category.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    IngredientsComponent,
-    FormIngreComponent
+    CategoryComponent,
   ],
   imports: [
     CommonModule,
-    IngredientsRoutingModule,
+    CategoryRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModule
   ]
 })
-export class IngredientsModule { }
+export class CategoryModule { }

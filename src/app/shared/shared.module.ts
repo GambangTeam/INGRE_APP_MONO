@@ -5,6 +5,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ValidationComponent } from './components/validation/validation.component';
 import { RouterModule } from '@angular/router';
 import { LoadingComponent } from './components/loading/loading.component';
+import { SearchFilterPipe } from './pipe/search-filter.pipe';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { LoadingComponent } from './components/loading/loading.component';
     FooterComponent,
     SidebarComponent,
     ValidationComponent,
-    LoadingComponent
+    LoadingComponent,
+    SearchFilterPipe
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,9 @@ import { LoadingComponent } from './components/loading/loading.component';
   exports: [
     SidebarComponent,
     ValidationComponent,
-    LoadingComponent
+    LoadingComponent,
+    SearchFilterPipe
+
   ]
 })
 export class SharedModule { }
